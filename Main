@@ -5,27 +5,29 @@ int dx[10] ={-1,1,2,1,2,-2,-1,-2};
 int dy[10] ={2,2,1,-2,-1,-1,-2,1};
 int check[30][30]={0};
 
-int test(int x, int y) {
+int test(int x, int y) { // Ensure that the horse is in the chessboard
 	if((x>=1 && x<=8) && (y>=1 && y<=8)) return 1;
 	else return 0;
 }
 
-void track(int x, int y, int square, string s) {
+void track(int x, int y, int square, string s) { // display the way that the horse go through 64 squares without repetition
 	if(square>64) return;
-	if(square == 64) {
+	if(square == 64) { // when the horse finishes 64 squares, we will print the way how it goes through.
 		cout<<s<<endl;
 		exit(0);
 	}
 	
 	for(int i=0; i<=7; i++) {
-		if(test(x+dx[i],y+dy[i]) == 1 && check[x+dx[i]][y+dy[i]] == 0) {
-				check[x+dx[i]][y+dy[i]] = 1;
+		if(test(x+dx[i],y+dy[i]) == 1 && check[x+dx[i]][y+dy[i]] == 0) { //we need to check the square that the horse will move
+									// in next step is not repeated.
+				check[x+dx[i]][y+dy[i]] = 1; // marked the square that the horse go in the next step to prevent 
+								//the repetition
 				
 				stringstream ss,ss1;
 				ss << (x+dx[i]);
 				ss1 << (y+dy[i]);
 				
-				track(x+dx[i],y+dy[i], square + 1, s + ss.str() +" "+ss1.str()+"\n");
+				track(x+dx[i],y+dy[i], square + 1, s + ss.str() +" "+ss1.str()+"\n"); // move to next square
 				check[x+dx[i]][y+dy[i]] = 0;
 			
 		}
