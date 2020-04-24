@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int dx[10] ={-1,1,2,1,2,-2,-1,-2};
+int dy[10] ={2,2,1,-2,-1,-1,-2,1};
+int check[30][30]={0};
+
+int test(int x, int y) {
+	if((x>=1 && x<=8) && (y>=1 && y<=8)) return 1;
+	else return 0;
+}
+
+void track(int x, int y, int square, string s) {
+	if(square>64) return;
+	if(square == 64) {
+		cout<<s<<endl;
+		exit(0);
+	}
+	
+	for(int i=0; i<=7; i++) {
+		if(test(x+dx[i],y+dy[i]) == 1 && check[x+dx[i]][y+dy[i]] == 0) {
+				check[x+dx[i]][y+dy[i]] = 1;
+				
+				stringstream ss,ss1;
+				ss << (x+dx[i]);
+				ss1 << (y+dy[i]);
+				
+				track(x+dx[i],y+dy[i], square + 1, s + ss.str() +" "+ss1.str()+"\n");
+				check[x+dx[i]][y+dy[i]] = 0;
+			
+		}
+	}
+}
+
+int main() {
+	check[1][1] = 1;
+	cout<<"1 1"<<endl;
+	track(1,1,1,"");
+}
+
